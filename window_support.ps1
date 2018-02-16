@@ -1,6 +1,4 @@
 #Setting Variables
-$debugrun = 'puppet agent -t --debug --trace'
-$facterdebug = 'facter --debug --trace'
 $logdir = puppet config print logdir
 $server = puppet config print server
 
@@ -17,14 +15,15 @@ Write-host = "Support logs are being written to" + $supportfolder
 $hostname = 'Hostname' *>> ($supportfolder + '/systeminfo.log')
 hostname *>> ($supportfolder + '/systeminfo.log')
 
+
 $puppet_version = 'puppet --version' *>> ($supportfolder + '/systeminfo.log')
 puppet --version *>> ($supportfolder + '/systeminfo.log')
 $hiera_version = 'hiera --version' *>> ($supportfolder + '/systeminfo.log')
-Invoke-Expression 'hiera --version' *>> ($supportfolder + '/systeminfo.log')
+hiera --version *>> ($supportfolder + '/systeminfo.log')
 $facter_version = 'facter --version' *>> ($supportfolder + '/systeminfo.log')
-Invoke-Expression 'facter --version' *>> ($supportfolder + '/systeminfo.log')
+facter --version *>> ($supportfolder + '/systeminfo.log')
 $ruby_version = 'ruby --verison' *>> ($supportfolder + '/systeminfo.log')
-Invoke-Expression 'ruby -v' *>> ($supportfolder + '/systeminfo.log')
+ruby -v *>> ($supportfolder + '/systeminfo.log')
 $where_puppet = 'where puppet' *>> ($supportfolder + '/systeminfo.log')
 where.exe puppet *>> ($supportfolder + '/systeminfo.log')
 $where_ruby = 'where.exe ruby' *>> ($supportfolder + '/systeminfo.log')
@@ -43,5 +42,5 @@ Get-wmiobject -Query "SELECT * FROM win32_service where (name = 'puppet' or name
 Get-Eventlog -source "Puppet" -logname "Application" | Format-List Index, Time, EntryType, Message *>> ($supportfolder + '/pastrunlogs.txt')
 
 # Running Puppet and Facter in debug/trace mode
-Invoke-Expression $debugrun *>> ($supportfolder + '/debugrun.log')
-Invoke-Expression $facterdebug *>> ($supportfolder + '/facterdebug.log')
+puppet agent -t --debug --trace *>> ($supportfolder + '/debugrun.log')
+facter --debug --trace *>> ($supportfolder + '/facterdebug.log')

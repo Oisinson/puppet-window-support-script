@@ -13,6 +13,9 @@ Write-host = "Support logs are being written to" + $supportfolder
 $hostname = 'Hostname' *>> ($supportfolder + '/systeminfo.log')
 hostname *>> ($supportfolder + '/systeminfo.log')
 
+$operating_system ='Operating System' *>> ($supportfolder + '/systeminfo.log')
+Get-WmiObject Win32_OperatingSystem | Format-Table caption,OSArchitecture,ServicePackMajorVersion *>> ($supportfolder + '/systeminfo.log')
+
 get-date *>> ($supportfolder + '/systeminfo.log')
 [System.TimeZone]::CurrentTimeZone *>> ($supportfolder + '/systeminfo.log')
 

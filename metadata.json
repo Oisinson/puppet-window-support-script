@@ -1,0 +1,26 @@
+{
+  "name": "puppet-windows-support-script",
+  "version": "1.0.0",
+  "author": "Kael Oisinson",
+  "summary": "Gathers logs and collects debug information for troubleshooting Windows Agents",
+  "license": "Apache-2.0",
+  "source": "https://github.com/Oisinson/puppet-window-support-script/issues",
+  "project_page": "https://github.com/Oisinson/puppet-window-support-script/",
+  "issues_url": "https://github.com/Oisinson/puppet-window-support-script/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Windows",
+      "operatingsystemrelease": [
+        "Server 2008",
+        "Server 2008 R2",
+        "Server 2012",
+        "Server 2012 R2",
+        "Server 2016",
+        "7",
+        "8",
+        "10"
+      ]
+    }
+  ],
+  "description": "Support Module for gathering puppet agent log data."
+}

@@ -6,11 +6,12 @@ $server = puppet config print server
 $supportfolder = $logdir + "/" + $date
 $supportfile = $supportfolder + "/systeminfo.log"
 $zippedfolder =  $logdir + "/" + $date + ".zip"
+$global:progressPreference = "silentlyContinue"
 
 $(New-Item -Path $supportfolder  -ItemType directory) | Out-Null
 
 # Print Screen. Folder Location, Progress
-Write-host "Support logs are being written to gathered. This can take a few minutes"
+Write-host "Support logs are being gathered. This can take a few minutes"
 
 # Getting  system information
 $hostname = "Hostname" *>> $supportfile

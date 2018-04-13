@@ -12,10 +12,10 @@ Write-Host
 $run_date_time = [string](Get-Date -Format yyyy-MM-dd-hh-mm)
 $eventlog_date = (Get-Date).AddDays(-7)
 
-$puppet_conf     = [string](puppet config print config)
-$puppet_server   = [string](puppet config print server)
-$puppet_logdir   = [string](puppet config print logdir)
-$puppet_statedir = [string](puppet config print statedir)
+$puppet_conf     = [string](puppet config print --section agent config)
+$puppet_server   = [string](puppet config print --section agent server)
+$puppet_logdir   = [string](puppet config print --section agent logdir)
+$puppet_statedir = [string](puppet config print --section agent statedir)
 
 if ($puppet_logdir -eq '') {
   $puppet_logdir = [string](Get-Location)
@@ -45,7 +45,7 @@ if (!(Test-Path $output_directory)) {
 'Puppet Enterprise Windows Support Script' > $output_file
 
 if (!(Test-Path $output_file)) {
-  Write-Host 'Error: could not write to output file:' 
+  Write-Host 'Error: could not write to output file:'
   Write-Host $output_file
   Exit
 }
@@ -105,9 +105,6 @@ Get-Eventlog -Source mcollective -LogName Application -After $eventlog_date -Err
 Write-Host 'Running Facter in Debug Mode ...'
 facter --debug --trace *>> ($output_directory + '/facter.log')
 
-Write-Host 'Running Puppet in Debug Mode ...'
-puppet agent -t --debug --trace *>> ($output_directory + '/puppet.log')
-
 Write-Host 'Copying Configuration Files and State Directory ...'
 
 if (!(Test-Path $puppet_conf)) {
@@ -131,7 +128,7 @@ Remove-Item $output_directory -Recurse
 Write-Host
 Write-Host 'Done.'
 Write-Host
-Write-Host 'Puppet Enterprise Windows Support Script output is located in:' 
+Write-Host 'Puppet Enterprise Windows Support Script output is located in:'
 Write-Host $output_archive
 Write-Host 'Please submit it to Puppet Enterprise Support.'
 Write-Host

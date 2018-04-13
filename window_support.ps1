@@ -48,11 +48,11 @@ Write-Host  "Testing Puppet Connectivity"
 "Testing port 8140 connection to " + $server *>> $supportFile
 Test-NetConnection $server -Port 8140 *>> $supportFile
 
-"Testing port 61613 connection to " + $server *>> $supportFile
-Test-NetConnection $server -Port 61613 *>> $supportFile
-
 "Testing port 8142 connection to " + $server *>> $supportFile
 Test-NetConnection $server -Port 8142 *>> $supportFile
+
+"Testing port 61613 connection to " + $server *>> $supportFile
+Test-NetConnection $server -Port 61613 *>> $supportFile
 
 "Puppet, PxP-agent, mcollective service information" *>> $supportFile
 Get-WmiObject -Query "SELECT * FROM win32_service where (name = 'puppet' or name = 'pxp-agent' or name = 'mcollective')" | Format-List -Property Name,Pathname, ProcessId, Startmode, State, Status, Startname *>> $supportFile

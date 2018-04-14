@@ -10,6 +10,7 @@ Write-Host
 # Script Variables
 
 $run_date_time = [string](Get-Date -Format yyyy-MM-dd-hh-mm)
+$time_zone = [System.TimeZone]::CurrentTimeZone
 $eventlog_date = (Get-Date).AddDays(-7)
 
 $puppet_conf     = [string](puppet config print --section agent config)
@@ -57,7 +58,7 @@ hostname *>> $output_file
 
 'Date, Time, Time Zone' >> $output_file
 $run_date_time >> $output_file
-[System.TimeZone]::CurrentTimeZone *>> $output_file
+$time_zone *>> $output_file
 
 'puppet --version' >> $output_file
 puppet --version *>> $output_file

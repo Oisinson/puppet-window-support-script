@@ -58,7 +58,7 @@ hostname *>> $output_file
 
 'Date, Time, Time Zone' >> $output_file
 $run_date_time >> $output_file
-$time_zone *>> $output_file
+$time_zone.StandardName *>> $output_file
 
 'puppet --version' >> $output_file
 puppet --version *>> $output_file

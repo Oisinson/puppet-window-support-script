@@ -125,13 +125,13 @@ if (!(Test-Path $puppet_statedir)) {
 if (!(Test-Path $puppet_pxp_logdir)) {
   'Error: puppet pxp-agent log directory not found' >> $output_file
 } else {
-  Copy-Item $puppet_pxp_logdir -Recurse -Destination $output_directory
+  Copy-Item $puppet_pxp_logdir -Recurse -Destination ($output_directory + "\pxp-agent")
 }
 
 if (!(Test-Path $puppet_mcollective_logdir)) {
   'Error: puppet mcollective directory not found' >> $output_file
 } else {
-  Copy-Item $puppet_mcollective_logdir -Recurse -Destination $output_directory
+  Copy-Item $puppet_mcollective_logdir -Recurse -Destination ($output_directory + "\mcollective")
 }
 
 Write-Host 'Compressing Data ...'

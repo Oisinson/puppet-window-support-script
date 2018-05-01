@@ -99,9 +99,7 @@ Get-WmiObject -Query "SELECT * FROM win32_service where (name = 'puppet' or name
 
 Write-Host 'Exporting Puppet Agent Services Application Event Logs ...'
 
-Get-Eventlog -Source puppet      -LogName Application -After $eventlog_date -ErrorAction SilentlyContinue | Format-List Index, Time, EntryType, Message *>> ($output_directory + '/eventlog_application_puppet.txt')
-Get-Eventlog -Source pxp-agent   -LogName Application -After $eventlog_date -ErrorAction SilentlyContinue | Format-List Index, Time, EntryType, Message *>> ($output_directory + '/eventlog_application_pxp-agent.txt')
-Get-Eventlog -Source mcollective -LogName Application -After $eventlog_date -ErrorAction SilentlyContinue | Format-List Index, Time, EntryType, Message *>> ($output_directory + '/eventlog_application_mcollective.txt')
+Get-Eventlog -Source puppet -LogName Application -After $eventlog_date 2> ($output_directory + '/eventlog_application_puppet_errors.txt') | Format-List Index, Time, EntryType, Message *>> ($output_directory + '/eventlog_application_puppet.txt')
 
 Write-Host 'Running Facter in Debug Mode ...'
 facter --debug --trace *>> ($output_directory + '/facter.log')

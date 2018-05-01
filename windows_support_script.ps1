@@ -13,10 +13,12 @@ $run_date_time = [string](Get-Date -Format yyyy-MM-dd-hh-mm)
 $time_zone = [System.TimeZone]::CurrentTimeZone
 $eventlog_date = (Get-Date).AddDays(-7)
 
-$puppet_conf     = [string](puppet config print --section agent config)
-$puppet_server   = [string](puppet config print --section agent server)
-$puppet_logdir   = [string](puppet config print --section agent logdir)
-$puppet_statedir = [string](puppet config print --section agent statedir)
+$puppet_conf               = [string](puppet config print --section agent config)
+$puppet_server             = [string](puppet config print --section agent server)
+$puppet_logdir             = [string](puppet config print --section agent logdir)
+$puppet_statedir           = [string](puppet config print --section agent statedir)
+$puppet_pxp_logdir         =  [string](facter -p common_appdata) + "\PuppetLabs\pxp-agent\var\log"
+$puppet_mcollective_logdir =  [string](facter -p common_appdata) + "\PuppetLabs\mcollective\var\log"
 
 if ($puppet_logdir -eq '') {
   $puppet_logdir = [string](Get-Location)
@@ -116,6 +118,18 @@ if (!(Test-Path $puppet_statedir)) {
   'Error: puppet state directory not found' >> $output_file
 } else {
   Copy-Item $puppet_statedir -Recurse -Destination $output_directory
+}
+
+if (!(Test-Path $puppet_pxp_logdir)) {
+  'Error: puppet pxp-agent log directory not found' >> $output_file
+} else {
+  Copy-Item $puppet_pxp_logdir -Recurse -Destination ($output_directory + "\pxp-agent")
+}
+
+if (!(Test-Path $puppet_mcollective_logdir)) {
+  'Error: puppet mcollective directory not found' >> $output_file
+} else {
+  Copy-Item $puppet_mcollective_logdir -Recurse -Destination ($output_directory + "\mcollective")
 }
 
 Write-Host 'Compressing Data ...'
